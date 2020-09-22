@@ -11,7 +11,7 @@ namespace DiscordBotMG.Modules
 		[Command("ping")]
         public async Task PingCommand()
         {
-            await Context.Channel.SendMessageAsync("Pong!");
+            await Context.Channel.SendMessageAsync("Pong-Pong!");
         }
     }
 }
