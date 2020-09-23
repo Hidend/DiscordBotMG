@@ -5,6 +5,7 @@ using DiscordBotMG.Services;
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace DiscordBotMG
 {
@@ -12,6 +13,10 @@ namespace DiscordBotMG
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+
             new Program().MainAsync().GetAwaiter().GetResult();
         }
 
@@ -20,6 +25,7 @@ namespace DiscordBotMG
             using (var services = ConfigureServices())
             {
                 var client = services.GetRequiredService<DiscordSocketClient>();
+                services.GetRequiredService<LoggingService>();
 
                 await client.LoginAsync(TokenType.Bot, " ");
                 await client.StartAsync();
@@ -36,6 +42,8 @@ namespace DiscordBotMG
                 .AddSingleton<DiscordSocketClient>()
                 .AddSingleton<CommandService>()
                 .AddSingleton<CommandHandlingService>()
+                .AddSingleton<LoggingService>()
+                .AddLogging(configure => configure.AddSerilog())
                 .BuildServiceProvider();
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
 using DiscordBotMG.Utils;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
